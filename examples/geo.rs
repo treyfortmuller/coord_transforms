@@ -19,8 +19,10 @@ fn main() {
     println!("Alt: {}", lla_vec.z);
 
     //Define ellipsoid for the Earth
-    let ellipsoid = geo_ellipsoid::geo_ellipsoid::new(geo_ellipsoid::WGS84_SEMI_MAJOR_AXIS_METERS,
-    										geo_ellipsoid::WGS84_FLATTENING);
+    let ellipsoid = geo_ellipsoid::geo_ellipsoid::new(
+        geo_ellipsoid::WGS84_SEMI_MAJOR_AXIS_METERS,
+        geo_ellipsoid::WGS84_FLATTENING,
+    );
 
     //Convert to Earth-Centered Earth-Fixed (ECEF)
     let ecef_vec = geo::lla2ecef(&lla_vec, &ellipsoid);
@@ -53,12 +55,20 @@ fn main() {
     println!("Lat: {}", llfromutm_vec.x.to_degrees());
     println!("Lon: {}", llfromutm_vec.y.to_degrees());
 
-
     //Convert it to NED and back
-    let lla_orig_vec = Vector3::new((lat_deg + 1.0).to_radians(), (lon_deg + 1.0).to_radians(), alt_m);
+    let lla_orig_vec = Vector3::new(
+        (lat_deg + 1.0).to_radians(),
+        (lon_deg + 1.0).to_radians(),
+        alt_m,
+    );
     let ned_vec = geo::lla2ned(&lla_orig_vec, &lla_again_vec, &ellipsoid);
     println!("-----NED-----");
-    println!("LLA Origin: {} - {} - {}", lla_orig_vec.x.to_degrees(), lla_orig_vec.y.to_degrees(), lla_orig_vec.z);
+    println!(
+        "LLA Origin: {} - {} - {}",
+        lla_orig_vec.x.to_degrees(),
+        lla_orig_vec.y.to_degrees(),
+        lla_orig_vec.z
+    );
     println!("N: {}", ned_vec.x);
     println!("E: {}", ned_vec.y);
     println!("D: {}", ned_vec.z);
@@ -66,7 +76,12 @@ fn main() {
     //Simple NED-ENU
     let simple_enu = geo::ned2enu(&ned_vec);
     println!("-----ENU-----");
-    println!("LLA Origin: {} - {} - {}", lla_orig_vec.x.to_degrees(), lla_orig_vec.y.to_degrees(), lla_orig_vec.z);
+    println!(
+        "LLA Origin: {} - {} - {}",
+        lla_orig_vec.x.to_degrees(),
+        lla_orig_vec.y.to_degrees(),
+        lla_orig_vec.z
+    );
     println!("E: {}", simple_enu.x);
     println!("N: {}", simple_enu.y);
     println!("U: {}", simple_enu.z);
@@ -74,7 +89,12 @@ fn main() {
     //Convert NED back into LLA
     let lla_revert_ned = geo::ned2lla(&lla_orig_vec, &ned_vec, &ellipsoid);
     println!("-----LLA (from NED)-----");
-    println!("LLA Origin: {} - {} - {}", lla_orig_vec.x.to_degrees(), lla_orig_vec.y.to_degrees(), lla_orig_vec.z);
+    println!(
+        "LLA Origin: {} - {} - {}",
+        lla_orig_vec.x.to_degrees(),
+        lla_orig_vec.y.to_degrees(),
+        lla_orig_vec.z
+    );
     println!("Lat: {}", lla_revert_ned.x.to_degrees());
     println!("Lon: {}", lla_revert_ned.y.to_degrees());
     println!("Alt: {}", lla_revert_ned.z);
@@ -82,9 +102,13 @@ fn main() {
     //Convert ENU back into LLA
     let lla_revert_enu = geo::enu2lla(&lla_orig_vec, &simple_enu, &ellipsoid);
     println!("-----LLA (from ENU)-----");
-    println!("LLA Origin: {} - {} - {}", lla_orig_vec.x.to_degrees(), lla_orig_vec.y.to_degrees(), lla_orig_vec.z);
+    println!(
+        "LLA Origin: {} - {} - {}",
+        lla_orig_vec.x.to_degrees(),
+        lla_orig_vec.y.to_degrees(),
+        lla_orig_vec.z
+    );
     println!("Lat: {}", lla_revert_enu.x.to_degrees());
     println!("Lon: {}", lla_revert_enu.y.to_degrees());
     println!("Alt: {}", lla_revert_enu.z);
-
 }

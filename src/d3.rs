@@ -1,17 +1,17 @@
 use na::Vector3;
 
 /// Converts 3-d spherical coordinates to 3-d cartesian coordinates
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * `sphere_vec` - Vector3 reference to the spherical vector (rho, theta, phi) (r, el, az) in radians
-/// 
+///
 /// # Return Value
-/// 
+///
 /// * `nalgebra::Vector3<f64>` - x, y, z
-/// 
+///
 /// # Formula
-/// 
+///
 /// * x = rho * sin(theta) * cos(phi)
 /// * y = rho * sin(theta) * sin(phi)
 /// * z = rho * cos(theta)
@@ -24,17 +24,17 @@ pub fn spherical2cartesian(sphere_vec: &Vector3<f64>) -> Vector3<f64> {
 }
 
 /// Converts 3-d cylindrical coordinates to 3-d cartesian coordinates
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * `cyl_vec` - Vector3 reference to the cylindrical vector (rho, theta, z) in radians
-/// 
+///
 /// # Return Value
-/// 
+///
 /// * `nalgebra::Vector3<f64>` - x, y, z
-/// 
+///
 /// # Formula
-/// 
+///
 /// * x = rho * cos(theta)
 /// * y = rho * sin(theta)
 /// * z = z
@@ -47,40 +47,40 @@ pub fn cylindrical2cartesian(cyl_vec: &Vector3<f64>) -> Vector3<f64> {
 }
 
 /// Converts 3-d cartesian coordinates to 3-d spherical coordinates
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * `cart_vec` - Vector3 reference to the cartesian vector (x, y, z)
-/// 
+///
 /// # Return Value
-/// 
+///
 /// * `nalgebra::Vector3<f64>` - rho, theta, phi (in radians)
-/// 
+///
 /// # Formula
-/// 
+///
 /// * rho = sqrt( x^2 + y^2 + z^2 )
 /// * theta = arctan((sqrt( x2 + y^2 )) / (z))
 /// * phi = arctan(y / x)
 pub fn cartesian2spherical(cart_vec: &Vector3<f64>) -> Vector3<f64> {
-	let mut ret_vec: Vector3<f64> = Vector3::new(0.0, 0.0, 0.0);
-	ret_vec.x = (cart_vec.x.powi(2) + cart_vec.y.powi(2) + cart_vec.z.powi(2)).sqrt();
-	ret_vec.y = ((cart_vec.x.powi(2) + cart_vec.y.powi(2)).sqrt()).atan2(cart_vec.z); 
-	ret_vec.z = cart_vec.y.atan2(cart_vec.x);
-	ret_vec
+    let mut ret_vec: Vector3<f64> = Vector3::new(0.0, 0.0, 0.0);
+    ret_vec.x = (cart_vec.x.powi(2) + cart_vec.y.powi(2) + cart_vec.z.powi(2)).sqrt();
+    ret_vec.y = ((cart_vec.x.powi(2) + cart_vec.y.powi(2)).sqrt()).atan2(cart_vec.z);
+    ret_vec.z = cart_vec.y.atan2(cart_vec.x);
+    ret_vec
 }
 
 /// Converts 3-d cartesian coordinates to 3-d cylindrical coordinates
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * `cart_vec` - Vector3 reference to the cartesian vector (x, y, z)
-/// 
+///
 /// # Return Value
-/// 
+///
 /// * `nalgebra::Vector3<f64>` - rho, theta, z (in radians)
-/// 
+///
 /// # Formula
-/// 
+///
 /// * rho = sqrt( x^2 + y^2 )
 /// * theta = arctan(y / x)
 /// * z = z
@@ -95,7 +95,7 @@ pub fn cartesian2cylindrical(cart_vec: &Vector3<f64>) -> Vector3<f64> {
 //Unit tests
 #[cfg(test)]
 mod tests {
-	use super::*;
+    use super::*;
     use float_cmp::ApproxEqUlps;
     #[test]
     fn test_spherical2cartesian() {
